@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		D8F7E6282227DB5100325630 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8F7E6272227DB5100325630 /* main.cpp */; };
+		D8F7E6302227DB5E00325630 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F7E62F2227DB5E00325630 /* OpenGL.framework */; };
+		D8F7E6332227DB6800325630 /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F7E6312227DB6800325630 /* libglfw.3.2.dylib */; };
+		D8F7E6342227DB6800325630 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F7E6322227DB6800325630 /* libGLEW.2.1.0.dylib */; };
+		D8F7E64E2227DBFA00325630 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8F7E6432227DBFA00325630 /* camera.cpp */; };
+		D8F7E6502227DBFA00325630 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8F7E6492227DBFA00325630 /* shader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +30,17 @@
 /* Begin PBXFileReference section */
 		D8F7E6242227DB5100325630 /* openGL-Lightning */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "openGL-Lightning"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F7E6272227DB5100325630 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D8F7E62F2227DB5E00325630 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		D8F7E6312227DB6800325630 /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
+		D8F7E6322227DB6800325630 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../usr/local/Cellar/glew/2.1.0/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
+		D8F7E6432227DBFA00325630 /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
+		D8F7E6442227DBFA00325630 /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
+		D8F7E6462227DBFA00325630 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		D8F7E6472227DBFA00325630 /* stb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb.cpp; sourceTree = "<group>"; };
+		D8F7E6492227DBFA00325630 /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		D8F7E64A2227DBFA00325630 /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
+		D8F7E64C2227DBFA00325630 /* shader1.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader1.vs; sourceTree = "<group>"; };
+		D8F7E64D2227DBFA00325630 /* shader1.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader1.fs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +48,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8F7E6332227DB6800325630 /* libglfw.3.2.dylib in Frameworks */,
+				D8F7E6342227DB6800325630 /* libGLEW.2.1.0.dylib in Frameworks */,
+				D8F7E6302227DB5E00325630 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +62,7 @@
 			children = (
 				D8F7E6262227DB5100325630 /* openGL-Lightning */,
 				D8F7E6252227DB5100325630 /* Products */,
+				D8F7E62E2227DB5D00325630 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,9 +77,67 @@
 		D8F7E6262227DB5100325630 /* openGL-Lightning */ = {
 			isa = PBXGroup;
 			children = (
+				D8F7E6412227DBFA00325630 /* header */,
+				D8F7E64B2227DBFA00325630 /* shaders */,
 				D8F7E6272227DB5100325630 /* main.cpp */,
 			);
 			path = "openGL-Lightning";
+			sourceTree = "<group>";
+		};
+		D8F7E62E2227DB5D00325630 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8F7E6322227DB6800325630 /* libGLEW.2.1.0.dylib */,
+				D8F7E6312227DB6800325630 /* libglfw.3.2.dylib */,
+				D8F7E62F2227DB5E00325630 /* OpenGL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8F7E6412227DBFA00325630 /* header */ = {
+			isa = PBXGroup;
+			children = (
+				D8F7E6422227DBFA00325630 /* camera */,
+				D8F7E6452227DBFA00325630 /* stb */,
+				D8F7E6482227DBFA00325630 /* shader */,
+			);
+			path = header;
+			sourceTree = "<group>";
+		};
+		D8F7E6422227DBFA00325630 /* camera */ = {
+			isa = PBXGroup;
+			children = (
+				D8F7E6432227DBFA00325630 /* camera.cpp */,
+				D8F7E6442227DBFA00325630 /* camera.hpp */,
+			);
+			path = camera;
+			sourceTree = "<group>";
+		};
+		D8F7E6452227DBFA00325630 /* stb */ = {
+			isa = PBXGroup;
+			children = (
+				D8F7E6462227DBFA00325630 /* stb_image.h */,
+				D8F7E6472227DBFA00325630 /* stb.cpp */,
+			);
+			path = stb;
+			sourceTree = "<group>";
+		};
+		D8F7E6482227DBFA00325630 /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				D8F7E6492227DBFA00325630 /* shader.cpp */,
+				D8F7E64A2227DBFA00325630 /* shader.hpp */,
+			);
+			path = shader;
+			sourceTree = "<group>";
+		};
+		D8F7E64B2227DBFA00325630 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				D8F7E64C2227DBFA00325630 /* shader1.vs */,
+				D8F7E64D2227DBFA00325630 /* shader1.fs */,
+			);
+			path = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,6 +196,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8F7E64E2227DBFA00325630 /* camera.cpp in Sources */,
+				D8F7E6502227DBFA00325630 /* shader.cpp in Sources */,
 				D8F7E6282227DB5100325630 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +320,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glfw/3.2.1/lib,
+					/usr/local/Cellar/glew/2.1.0/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -248,6 +334,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glfw/3.2.1/lib,
+					/usr/local/Cellar/glew/2.1.0/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
