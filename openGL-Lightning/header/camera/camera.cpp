@@ -35,7 +35,6 @@ glm::mat4 Camera::getViewMatrix(){
 
 void Camera::processKeyboard(CAMERA_MOVEMENT direction, float deltaTime){
     float camSpeed = MoveSpeed * deltaTime;
-    cout << "delta time is " << deltaTime << endl;
     if (direction == FORWARD)
         camPos += camFront * camSpeed;
     if (direction == BACKWARD)

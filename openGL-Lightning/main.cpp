@@ -37,6 +37,9 @@ bool firstMouse = true;
 float deltaTime =0.0f;
 float lastTime = 0.0f;
 
+// 光源位置
+glm::vec3 lightPos = glm::vec3(1.2, 1.0f, 2.0f);
+
 int main(int argc, const char * argv[]) {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -65,88 +68,78 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     
-    // 编译着色器
-    Shader shader("shaders/shader1.vs", "shaders/shader1.fs");
-    
-    // 正方体的36个顶点。 (一个面6个顶点)
-    float vertices[] = {
-        // 位置              // 纹理坐标
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    };
-    
-    unsigned int indices[] = {
-        0, 1, 3,
-        1, 2, 3
-    };
-    
-    // 顶点数组对象
-    unsigned int VAO, VBO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-    
-    // 1. 绑定VAO
-    glBindVertexArray(VAO);
-    // 2. 复制顶点数组到顶点缓冲中
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    // 3. 设置顶点属性
-    
-    // 位置变量设置
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*(sizeof(float)), (void*)0);
-    glEnableVertexAttribArray(0);
-    
-    
-    shader.use();
     
     // 若不启用 GL_DEPTH_TEST 则会出现物体的后静和前景覆盖的问题
     glEnable(GL_DEPTH_TEST);
     
-    glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-    shader.setMat4("view", view);
+    // 编译着色器
+    Shader shader("shaders/shader1.vs", "shaders/shader1.fs");
+    Shader lampShader("shaders/shader_lighter.vs", "shaders/shader_lighter.fs");
+    
+    // 正方体的36个顶点。 (一个面6个顶点)
+    float vertices[] = {
+        // 位置              // 纹理坐标
+        -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        -0.5f,  0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f,
+        
+        -0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
+        -0.5f, -0.5f,  0.5f,
+        
+        -0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
+        
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        
+        -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+        -0.5f, -0.5f,  0.5f,
+        -0.5f, -0.5f, -0.5f,
+        
+        -0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f, -0.5f,
+    };
+    
+    // 顶点数组对象
+    unsigned int VAO, VBO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindVertexArray(VAO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*(sizeof(float)), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    // 光源着色器
+    unsigned int lighterVAO;
+    glGenVertexArrays(1, &lighterVAO);
+    glBindVertexArray(lighterVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*(sizeof(float)), (void*)0);
+    glEnableVertexAttribArray(0);
     
     deltaTime = lastTime = 0.0f;
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -158,10 +151,12 @@ int main(int argc, const char * argv[]) {
         glfwSetScrollCallback(window, scrollCallback); // 设置鼠标滚轮回调函数
         
         // 渲染指令
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         shader.use();
+        shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+        shader.setVec3("lighterColor", 1.0f, 1.0f, 1.0f);
         // model， view， projection矩阵的创建
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::mat4(1.0f);
@@ -175,9 +170,21 @@ int main(int argc, const char * argv[]) {
         shader.setMat4("view", view);
         shader.setMat4("projection", projection);
         
-        
+        // 绘制物体
         glBindVertexArray(VAO);
         shader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        
+        // 光源设置
+        lampShader.use();
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, lightPos);
+        model = glm::scale(model, glm::vec3(0.2f));
+        lampShader.setMat4("model", model);
+        lampShader.setMat4("view", view);
+        lampShader.setMat4("projection", projection);
+        // 绘制光源
+        glBindVertexArray(lighterVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         
         glfwSwapBuffers(window); // 颜色缓冲交换
@@ -186,8 +193,8 @@ int main(int argc, const char * argv[]) {
     }
     
     glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &lighterVAO);
     glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
     
     glfwTerminate();
     return 0;

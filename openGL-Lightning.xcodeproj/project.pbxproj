@@ -41,6 +41,8 @@
 		D8F7E64A2227DBFA00325630 /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
 		D8F7E64C2227DBFA00325630 /* shader1.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader1.vs; sourceTree = "<group>"; };
 		D8F7E64D2227DBFA00325630 /* shader1.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader1.fs; sourceTree = "<group>"; };
+		D8F7E6512228276100325630 /* shader_lighter.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_lighter.vs; sourceTree = "<group>"; };
+		D8F7E6522228276F00325630 /* shader_lighter.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_lighter.fs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,8 @@
 			children = (
 				D8F7E64C2227DBFA00325630 /* shader1.vs */,
 				D8F7E64D2227DBFA00325630 /* shader1.fs */,
+				D8F7E6512228276100325630 /* shader_lighter.vs */,
+				D8F7E6522228276F00325630 /* shader_lighter.fs */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
