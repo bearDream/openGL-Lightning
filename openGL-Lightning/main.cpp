@@ -78,48 +78,48 @@ int main(int argc, const char * argv[]) {
     
     // 正方体的36个顶点。 (一个面6个顶点)
     float vertices[] = {
-        // 位置              // 纹理坐标
-        -0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
+        // 位置              // 平面的法向量
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+         0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
         
-        -0.5f, -0.5f,  0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
+        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
+         0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
         
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,-1.0f, 0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,-1.0f, 0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,-1.0f, 0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,-1.0f, 0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,-1.0f, 0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,-1.0f, 0.0f,  0.0f,
         
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
+         0.5f,  0.5f,  0.5f, 1.0f, 0.0f,  0.0f,
+         0.5f,  0.5f, -0.5f, 1.0f, 0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f,
+         0.5f, -0.5f,  0.5f, 1.0f, 0.0f,  0.0f,
+         0.5f,  0.5f,  0.5f, 1.0f, 0.0f,  0.0f,
         
-        -0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
+         0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
         
-        -0.5f,  0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
+        -0.5f,  0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.0f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.0f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 0.0f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
     };
     
     // 顶点数组对象
@@ -130,15 +130,17 @@ int main(int argc, const char * argv[]) {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     glBindVertexArray(VAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*(sizeof(float)), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*(sizeof(float)), (void*)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*(sizeof(float)), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
     
     // 光源着色器
     unsigned int lighterVAO;
     glGenVertexArrays(1, &lighterVAO);
     glBindVertexArray(lighterVAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*(sizeof(float)), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*(sizeof(float)), (void*)0);
     glEnableVertexAttribArray(0);
     
     deltaTime = lastTime = 0.0f;
@@ -157,6 +159,7 @@ int main(int argc, const char * argv[]) {
         shader.use();
         shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         shader.setVec3("lighterColor", 1.0f, 1.0f, 1.0f);
+        shader.setVec3("lightPos", lightPos);
         // model， view， projection矩阵的创建
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::mat4(1.0f);
