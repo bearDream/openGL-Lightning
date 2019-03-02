@@ -11,10 +11,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <math.h>
 
-#include "header/stb/stb.cpp"
+#include "header/texture/texture.hpp"
+//#include "header/stb/stb.cpp"
 #include "header/shader/shader.hpp"
 #include "header/camera/camera.hpp"
 
@@ -28,6 +28,7 @@ void scrollCallback(GLFWwindow *, double, double);
 const int window_width = 800;
 const int  window_height = 500;
 char cube_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2.png";
+char border_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2_specular.png";
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -139,26 +140,7 @@ int main(int argc, const char * argv[]) {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*(sizeof(float)), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
     
-    // 箱子的纹理
-    unsigned int texture_cube;
-    glGenTextures(1, &texture_cube);
-    glBindTexture(GL_TEXTURE_2D, texture_cube);
-    
-    // 为当前绑定的纹理对象设置环绕、过滤方式
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
-    int t_width, t_height, nrChannels;
-    unsigned char *data = stbi_load(cube_texture, &t_width, &t_height, &nrChannels, STBI_rgb);
-    if (data) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, t_width, t_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }else
-        std::cout << "Failed to load texture"  << endl;
-    stbi_image_free(data);
-    
+    unsigned int texture_cube = loadTexture(cube_texture);
     
     // 光源着色器
     unsigned int lighterVAO;
