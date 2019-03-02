@@ -156,10 +156,13 @@ int main(int argc, const char * argv[]) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
+        lightPos.x = sin((float)glfwGetTime()) * 1.0f;
+        lightPos.y = sin(glfwGetTime() / 1.0f) * 2.0f;
+        
         shader.use();
         shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         shader.setVec3("lighterColor", 1.0f, 1.0f, 1.0f);
-        shader.setVec3("lightPos", lightPos);
+        shader.setVec3("LightPosition", lightPos);
         // model， view， projection矩阵的创建
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::mat4(1.0f);
@@ -237,5 +240,4 @@ void mouseCallback(GLFWwindow* window, double x_pos, double y_pos){
 
 void scrollCallback(GLFWwindow *window, double x_offset, double y_offset){
     camera.processMouseScroll(y_offset);
-    
 }
