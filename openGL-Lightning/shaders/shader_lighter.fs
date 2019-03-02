@@ -2,5 +2,5 @@
 out vec4 FragColor;
 
 void main(){
-    FragColor = vec4(1.0f); // 光照设置为白色， 四个分量都为1.0
+    FragColor = vec3(1.0f); // 光照设置为白色， 四个分量都为1.0
 }

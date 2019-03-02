@@ -156,13 +156,23 @@ int main(int argc, const char * argv[]) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        lightPos.x = sin((float)glfwGetTime()) * 1.0f;
-        lightPos.y = sin(glfwGetTime() / 1.0f) * 2.0f;
+        lightPos.x = sin(glfwGetTime()) * 2.0f;
+        lightPos.y = sin(glfwGetTime() / 2.0f);
         
         shader.use();
-        shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+//        shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+        shader.setVec3("viewPos", camera.camPos);
         shader.setVec3("lighterColor", 1.0f, 1.0f, 1.0f);
-        shader.setVec3("LightPosition", lightPos);
+        shader.setVec3("lightPos", lightPos);
+        shader.setVec3("material.ambient", 0.19225, 0.19225, 0.19225);
+        shader.setVec3("material.diffuse", 0.50754, 0.50754, 0.50754);
+        shader.setVec3("material.specular", 0.508273, 0.508273, 0.5019f);
+        shader.setFloat1("material.shininess", 32.0f);
+        
+        shader.setVec3("light.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
+        shader.setVec3("light.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+        shader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        
         // model， view， projection矩阵的创建
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::mat4(1.0f);
@@ -178,7 +188,6 @@ int main(int argc, const char * argv[]) {
         
         // 绘制物体
         glBindVertexArray(VAO);
-        shader.setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         
         // 光源设置
