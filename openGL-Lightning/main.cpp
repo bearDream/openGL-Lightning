@@ -11,6 +11,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <math.h>
 
 #include "header/stb/stb.cpp"
@@ -26,6 +27,7 @@ void scrollCallback(GLFWwindow *, double, double);
 
 const int window_width = 800;
 const int  window_height = 500;
+char cube_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2.png";
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -78,48 +80,48 @@ int main(int argc, const char * argv[]) {
     
     // 正方体的36个顶点。 (一个面6个顶点)
     float vertices[] = {
-        // 位置              // 平面的法向量
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-         0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-         0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-         0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+        // positions          // normals           // texture coords
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
         
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
-         0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
-         0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
-         0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
-        -0.5f,  0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
         
-        -0.5f,  0.5f,  0.5f,-1.0f, 0.0f,  0.0f,
-        -0.5f,  0.5f, -0.5f,-1.0f, 0.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f,-1.0f, 0.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f,-1.0f, 0.0f,  0.0f,
-        -0.5f, -0.5f,  0.5f,-1.0f, 0.0f,  0.0f,
-        -0.5f,  0.5f,  0.5f,-1.0f, 0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
         
-         0.5f,  0.5f,  0.5f, 1.0f, 0.0f,  0.0f,
-         0.5f,  0.5f, -0.5f, 1.0f, 0.0f,  0.0f,
-         0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f,
-         0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  0.0f,
-         0.5f, -0.5f,  0.5f, 1.0f, 0.0f,  0.0f,
-         0.5f,  0.5f,  0.5f, 1.0f, 0.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
         
-        -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
-         0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
         
-        -0.5f,  0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.0f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.0f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 0.0f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
     };
     
     // 顶点数组对象
@@ -130,17 +132,40 @@ int main(int argc, const char * argv[]) {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     glBindVertexArray(VAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*(sizeof(float)), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*(sizeof(float)), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*(sizeof(float)), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*(sizeof(float)), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*(sizeof(float)), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+    
+    // 箱子的纹理
+    unsigned int texture_cube;
+    glGenTextures(1, &texture_cube);
+    glBindTexture(GL_TEXTURE_2D, texture_cube);
+    
+    // 为当前绑定的纹理对象设置环绕、过滤方式
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    int t_width, t_height, nrChannels;
+    unsigned char *data = stbi_load(cube_texture, &t_width, &t_height, &nrChannels, STBI_rgb);
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, t_width, t_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }else
+        std::cout << "Failed to load texture"  << endl;
+    stbi_image_free(data);
+    
     
     // 光源着色器
     unsigned int lighterVAO;
     glGenVertexArrays(1, &lighterVAO);
     glBindVertexArray(lighterVAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*(sizeof(float)), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*(sizeof(float)), (void*)0);
     glEnableVertexAttribArray(0);
     
     deltaTime = lastTime = 0.0f;
@@ -160,17 +185,15 @@ int main(int argc, const char * argv[]) {
         lightPos.y = sin(glfwGetTime() / 2.0f);
         
         shader.use();
-//        shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         shader.setVec3("viewPos", camera.camPos);
         shader.setVec3("lighterColor", 1.0f, 1.0f, 1.0f);
         shader.setVec3("lightPos", lightPos);
-        shader.setVec3("material.ambient", 0.19225, 0.19225, 0.19225);
-        shader.setVec3("material.diffuse", 0.50754, 0.50754, 0.50754);
-        shader.setVec3("material.specular", 0.508273, 0.508273, 0.5019f);
-        shader.setFloat1("material.shininess", 32.0f);
+        shader.setInt1("material.diffuse", 0);
+        shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        shader.setFloat1("material.shininess", 64.0f);
         
-        shader.setVec3("light.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
-        shader.setVec3("light.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+        shader.setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        shader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
         shader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
         
         // model， view， projection矩阵的创建
@@ -187,6 +210,8 @@ int main(int argc, const char * argv[]) {
         shader.setMat4("projection", projection);
         
         // 绘制物体
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture_cube);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         
