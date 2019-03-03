@@ -1,7 +1,7 @@
 #version 330 core
 out vec4 FragColor;
 
-uniform vec3 lightPos;
+//uniform vec3 lightPos;
 uniform vec3 viewPos;
 
 in vec3 normal;
@@ -12,11 +12,9 @@ in vec2 TexCoords;
 struct Material{
     sampler2D diffuse;
     sampler2D specular;
-    sampler2D emission;
     float shininess; // 反光度
 };
 
-// material
 struct Light{
     vec3 ambient;
     vec3 diffuse;
@@ -24,7 +22,11 @@ struct Light{
     // 新增光的方向
     vec3 direction;
     // 定向光不需要光源位置
-//    vec3 position;
+    vec3 position;
+    // 计算点光源光线衰减的 三个常数值
+    float constant;
+    float linear;
+    float quadratic;
 };
 
 uniform Material material;
@@ -36,7 +38,7 @@ void main(){
     
     // 计算漫反射向量
     vec3 norm = normalize(normal);
-    vec3 lightDir = normalize(lightPos - FragPos); // 片段指向光源的向量
+    vec3 lightDir = normalize(light.position - FragPos); // 片段指向光源的向量
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));
     
@@ -46,8 +48,14 @@ void main(){
     float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material.shininess);
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
     
-    // 放射光
-    vec3 emision = texture(material.emission, TexCoords).rgb;
-    vec3 res = ambient + diffuse + specular + emision;
+    // 计算光源衰减
+    float distance = length(light.position - FragPos);
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+    
+    ambient *= attenuation;
+    diffuse *= attenuation;
+    specular *= attenuation;
+    
+    vec3 res = ambient + diffuse + specular;
     FragColor = vec4(res, 1.0f);
 }

@@ -180,16 +180,20 @@ int main(int argc, const char * argv[]) {
         
         shader.use();
         shader.setVec3("viewPos", camera.camPos);
-        shader.setVec3("lightPos", lightPos);
         shader.setInt1("material.diffuse", 0);
         shader.setInt1("material.specular", 1.0f);
-        shader.setInt1("material.emission", 2.0f);
         shader.setFloat1("material.shininess", 64.0f);
         
         shader.setVec3("light.ambient", glm::vec3(0.2f));
         shader.setVec3("light.diffuse", glm::vec3(0.5f));
         shader.setVec3("light.specular", glm::vec3(1.0f));
         shader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
+        shader.setVec3("light.position", lightPos);
+        
+        // 设置电光源覆盖距离 默认50。其他距离的参数见 http://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
+        shader.setFloat1("light.constant", 1.0f);
+        shader.setFloat1("light.linear", 0.09f);
+        shader.setFloat1("light.quadratic", 0.032f);
         
         // model， view， projection矩阵的创建
         glm::mat4 model = glm::mat4(1.0f);
