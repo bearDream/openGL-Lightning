@@ -1,7 +1,6 @@
 #version 330 core
 out vec4 FragColor;
 
-uniform vec3 lighterColor;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 
@@ -12,7 +11,8 @@ in vec2 TexCoords;
 // material
 struct Material{
     sampler2D diffuse;
-    vec3 specular;
+    sampler2D specular;
+    sampler2D emission;
     float shininess; // 反光度
 };
 
@@ -41,8 +41,10 @@ void main(){
     vec3 viewDir = normalize(viewPos-FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material.shininess);
-    vec3 specular = light.specular * (spec * material.specular);
+    vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
     
-    vec3 res = ambient + diffuse + specular;
+    // 放射光
+    vec3 emision = texture(material.emission, TexCoords).rgb;
+    vec3 res = ambient + diffuse + specular + emision;
     FragColor = vec4(res, 1.0f);
 }

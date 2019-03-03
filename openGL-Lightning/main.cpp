@@ -28,7 +28,8 @@ void scrollCallback(GLFWwindow *, double, double);
 const int window_width = 800;
 const int  window_height = 500;
 char cube_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2.png";
-char border_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2_specular.png";
+char border_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/lighting_maps_specular_color.png";
+char matrix_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/matrix.jpg";
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -141,6 +142,8 @@ int main(int argc, const char * argv[]) {
     glEnableVertexAttribArray(2);
     
     unsigned int texture_cube = loadTexture(cube_texture);
+    unsigned int texture_border = loadTexture(border_texture);
+    unsigned int texture_matrix = loadTexture(matrix_texture);
     
     // 光源着色器
     unsigned int lighterVAO;
@@ -168,15 +171,15 @@ int main(int argc, const char * argv[]) {
         
         shader.use();
         shader.setVec3("viewPos", camera.camPos);
-        shader.setVec3("lighterColor", 1.0f, 1.0f, 1.0f);
         shader.setVec3("lightPos", lightPos);
         shader.setInt1("material.diffuse", 0);
-        shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        shader.setInt1("material.specular", 1.0f);
+        shader.setInt1("material.emission", 2.0f);
         shader.setFloat1("material.shininess", 64.0f);
         
-        shader.setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        shader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        shader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        shader.setVec3("light.ambient", glm::vec3(0.2f));
+        shader.setVec3("light.diffuse", glm::vec3(0.5f));
+        shader.setVec3("light.specular", glm::vec3(1.0f));
         
         // model， view， projection矩阵的创建
         glm::mat4 model = glm::mat4(1.0f);
@@ -194,6 +197,10 @@ int main(int argc, const char * argv[]) {
         // 绘制物体
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture_cube);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture_border);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, texture_matrix);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         
