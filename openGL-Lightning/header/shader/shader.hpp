@@ -27,6 +27,14 @@ public:
     // 激活程序
     void use();
     
+    
+    // 设置定向光源
+    void setDirectionLight(const glm::vec3 &direction, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular);
+    // 设置点光源
+    void setPointLight(glm::vec3 pos[], const float &constant, const float &linear, const float &quadratic, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const unsigned int size);
+    // 设置聚光灯源
+    void setSpotLight(const glm::vec3 &front, const glm::vec3 &pos, const float &cutoff, const float &outerCutoff, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular);
+    
     void setFloat4(const std::string &name, float value1, float value2, float value3, float value4) const;
     void setBool1(const std::string &name, bool value) const;
     void setInt1(const std::string &name, int value) const;

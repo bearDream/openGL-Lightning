@@ -123,4 +123,33 @@ void Shader::setVec3(const std::string &name, const float x, const float y, cons
     glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
 }
 
+void Shader::setDirectionLight(const glm::vec3 &direction, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular){
+    setVec3("dirLight.direction", direction);
+    setVec3("dirLight.ambient", glm::vec3(0.2f));
+    setVec3("dirLight.diffuse", glm::vec3(0.5f));
+    setVec3("dirLight.specular", glm::vec3(1.0f));
+}
 
+void Shader::setSpotLight(const glm::vec3 &front, const glm::vec3 &pos, const float &cutoff, const float &outerCutoff, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular){
+    setVec3("spotLight.direction", front);
+    setVec3("spotLight.position", pos);
+    setFloat1("spotLight.cutoff", cutoff);
+    setFloat1("spotLight.outerCutoff", outerCutoff);
+    setVec3("spotLight.ambient", ambient);
+    setVec3("spotLight.diffuse", diffuse);
+    setVec3("spotLight.specular", specular);
+}
+
+void Shader::setPointLight(glm::vec3 *pos, const float &constant, const float &linear, const float &quadratic, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const unsigned int size){
+    
+    for (int i = 0; i < size; i++) {
+        setVec3("pointLight[" + to_string(i) + "].position", pos[i]);
+        setVec3("pointLight[" + to_string(i) + "].ambient", ambient);
+        setVec3("pointLight[" + to_string(i) + "].diffuse", diffuse);
+        setVec3("pointLight[" + to_string(i) + "].specular", specular);
+        setFloat1("pointLight[" + to_string(i) + "].constant", constant);
+        setFloat1("pointLight[" + to_string(i) + "].linear", linear);
+        setFloat1("pointLight[" + to_string(i) + "].quadratic", quadratic);
+    }
+
+}
