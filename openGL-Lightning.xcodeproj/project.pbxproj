@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D87D1EC3222AD80400E3ED6D /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D87D1EC1222AD80400E3ED6D /* texture.cpp */; };
 		D8F7E6282227DB5100325630 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8F7E6272227DB5100325630 /* main.cpp */; };
 		D8F7E6302227DB5E00325630 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F7E62F2227DB5E00325630 /* OpenGL.framework */; };
 		D8F7E6332227DB6800325630 /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F7E6312227DB6800325630 /* libglfw.3.2.dylib */; };
@@ -28,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D87D1EC1222AD80400E3ED6D /* texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
+		D87D1EC2222AD80400E3ED6D /* texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
 		D8F7E6242227DB5100325630 /* openGL-Lightning */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "openGL-Lightning"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F7E6272227DB5100325630 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D8F7E62F2227DB5E00325630 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -59,6 +62,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D87D1EC0222AD7E600E3ED6D /* texture */ = {
+			isa = PBXGroup;
+			children = (
+				D87D1EC1222AD80400E3ED6D /* texture.cpp */,
+				D87D1EC2222AD80400E3ED6D /* texture.hpp */,
+			);
+			path = texture;
+			sourceTree = "<group>";
+		};
 		D8F7E61B2227DB5100325630 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +111,7 @@
 		D8F7E6412227DBFA00325630 /* header */ = {
 			isa = PBXGroup;
 			children = (
+				D87D1EC0222AD7E600E3ED6D /* texture */,
 				D8F7E6422227DBFA00325630 /* camera */,
 				D8F7E6452227DBFA00325630 /* stb */,
 				D8F7E6482227DBFA00325630 /* shader */,
@@ -201,6 +214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8F7E64E2227DBFA00325630 /* camera.cpp in Sources */,
+				D87D1EC3222AD80400E3ED6D /* texture.cpp in Sources */,
 				D8F7E6502227DBFA00325630 /* shader.cpp in Sources */,
 				D8F7E6282227DB5100325630 /* main.cpp in Sources */,
 			);
