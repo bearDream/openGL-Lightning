@@ -192,8 +192,10 @@ int main(int argc, const char * argv[]) {
         
         // 手电筒的光照
         shader.setFloat1("light.cutoff", glm::cos(glm::radians(12.5f)));
+        shader.setFloat1("light.outerCutoff", glm::cos(glm::radians(17.5f)));
         
-        // 设置电光源覆盖距离 默认50。其他距离的参数见 http://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
+        // 设置点光源覆盖距离 默认50。其他距离的参数见
+        // http://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
         shader.setFloat1("light.constant", 1.0f);
         shader.setFloat1("light.linear", 0.09f);
         shader.setFloat1("light.quadratic", 0.032f);
