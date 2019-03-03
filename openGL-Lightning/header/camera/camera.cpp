@@ -40,9 +40,9 @@ void Camera::processKeyboard(CAMERA_MOVEMENT direction, float deltaTime){
     if (direction == BACKWARD)
         camPos -= camFront * camSpeed;
     if (direction == LEFT)
-        camPos -= RIGHT * camSpeed;
+        camPos -= camRight * camSpeed;
     if (direction == RIGHT)
-        camPos += RIGHT * camSpeed;
+        camPos += camRight * camSpeed;
     // if set camPos.y = 0.0f, then constraint camera in ground.
 //    camPos.y = 0.0f;
 }

@@ -28,8 +28,7 @@ void scrollCallback(GLFWwindow *, double, double);
 const int window_width = 800;
 const int  window_height = 500;
 char cube_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2.png";
-char border_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/lighting_maps_specular_color.png";
-char matrix_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/matrix.jpg";
+char border_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2_specular.png";
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -126,6 +125,19 @@ int main(int argc, const char * argv[]) {
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
     };
     
+    glm::vec3 cubePositions[] = {
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 1.0f,  1.5f, -2.0f),
+        glm::vec3(-1.5f, -2.2f, -2.5f),
+        glm::vec3(-3.8f, -2.0f, -3.3f),
+        glm::vec3( 2.4f, -0.4f, -3.5f),
+        glm::vec3(-1.7f,  3.0f, -7.5f),
+        glm::vec3( 1.3f, -2.0f, -2.5f),
+        glm::vec3( 1.5f,  2.0f, -2.5f),
+        glm::vec3( 1.5f,  0.2f, -1.5f),
+        glm::vec3(-1.3f,  1.0f, -1.5f)
+    };
+    
     // 顶点数组对象
     unsigned int VAO, VBO;
     glGenVertexArrays(1, &VAO);
@@ -143,7 +155,6 @@ int main(int argc, const char * argv[]) {
     
     unsigned int texture_cube = loadTexture(cube_texture);
     unsigned int texture_border = loadTexture(border_texture);
-    unsigned int texture_matrix = loadTexture(matrix_texture);
     
     // 光源着色器
     unsigned int lighterVAO;
@@ -166,8 +177,6 @@ int main(int argc, const char * argv[]) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        lightPos.x = sin(glfwGetTime()) * 2.0f;
-        lightPos.y = sin(glfwGetTime() / 2.0f);
         
         shader.use();
         shader.setVec3("viewPos", camera.camPos);
@@ -180,6 +189,7 @@ int main(int argc, const char * argv[]) {
         shader.setVec3("light.ambient", glm::vec3(0.2f));
         shader.setVec3("light.diffuse", glm::vec3(0.5f));
         shader.setVec3("light.specular", glm::vec3(1.0f));
+        shader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
         
         // model， view， projection矩阵的创建
         glm::mat4 model = glm::mat4(1.0f);
@@ -190,7 +200,6 @@ int main(int argc, const char * argv[]) {
         
         view = camera.getViewMatrix();
         // 传入着色器
-        shader.setMat4("model", model);
         shader.setMat4("view", view);
         shader.setMat4("projection", projection);
         
@@ -199,10 +208,16 @@ int main(int argc, const char * argv[]) {
         glBindTexture(GL_TEXTURE_2D, texture_cube);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture_border);
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, texture_matrix);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        for (unsigned int i = 0; i < 10; i++) {
+            
+            model = glm::translate(model, cubePositions[i]);
+            float angel = 20.0f * i;
+            model = glm::rotate(model, glm::radians(angel), glm::vec3(1.0f, 0.3f, 0.5f));
+            
+            shader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
         
         // 光源设置
         lampShader.use();

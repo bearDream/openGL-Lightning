@@ -21,7 +21,10 @@ struct Light{
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
-    vec3 position; // 光源位置
+    // 新增光的方向
+    vec3 direction;
+    // 定向光不需要光源位置
+//    vec3 position;
 };
 
 uniform Material material;
