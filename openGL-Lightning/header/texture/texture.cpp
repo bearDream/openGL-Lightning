@@ -16,7 +16,6 @@ unsigned int loadTexture(char *file){
     string filename = file;
     unsigned long suffix_pos = filename.find_last_of(".");
     string suffix = filename.substr(suffix_pos);
-    cout << "suffix: " << suffix << endl;
     // 箱子的纹理
     unsigned int texture_cube;
     glGenTextures(1, &texture_cube);

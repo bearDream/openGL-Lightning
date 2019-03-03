@@ -187,8 +187,11 @@ int main(int argc, const char * argv[]) {
         shader.setVec3("light.ambient", glm::vec3(0.2f));
         shader.setVec3("light.diffuse", glm::vec3(0.5f));
         shader.setVec3("light.specular", glm::vec3(1.0f));
-        shader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
-        shader.setVec3("light.position", lightPos);
+        shader.setVec3("light.direction", camera.camFront);
+        shader.setVec3("light.position", camera.camPos);
+        
+        // 手电筒的光照
+        shader.setFloat1("light.cutoff", glm::cos(glm::radians(12.5f)));
         
         // 设置电光源覆盖距离 默认50。其他距离的参数见 http://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
         shader.setFloat1("light.constant", 1.0f);
