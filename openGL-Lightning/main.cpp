@@ -30,6 +30,7 @@ const int  window_height = 500;
 char cube_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2.png";
 char border_texture[255] = "/Users/laxzhang/Code/openGL/openGL-Lightning/openGL-Lightning/container2_specular.png";
 
+
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = window_width / 2;
