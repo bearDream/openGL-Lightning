@@ -125,9 +125,9 @@ void Shader::setVec3(const std::string &name, const float x, const float y, cons
 
 void Shader::setDirectionLight(const glm::vec3 &direction, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular){
     setVec3("dirLight.direction", direction);
-    setVec3("dirLight.ambient", glm::vec3(0.2f));
-    setVec3("dirLight.diffuse", glm::vec3(0.5f));
-    setVec3("dirLight.specular", glm::vec3(1.0f));
+    setVec3("dirLight.ambient", ambient);
+    setVec3("dirLight.diffuse", diffuse);
+    setVec3("dirLight.specular", specular);
 }
 
 void Shader::setSpotLight(const glm::vec3 &front, const glm::vec3 &pos, const float &cutoff, const float &outerCutoff, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular){
